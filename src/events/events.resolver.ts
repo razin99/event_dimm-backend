@@ -1,8 +1,16 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Parent,
+  ResolveField,
+} from '@nestjs/graphql';
 import { EventsService } from './events.service';
 import { Event } from './entities/event.entity';
 import { CreateEventInput } from './dto/create-event.input';
 import { UpdateEventInput } from './dto/update-event.input';
+import { User } from 'src/users/entities/user.entity';
 
 @Resolver(() => Event)
 export class EventsResolver {
@@ -31,5 +39,10 @@ export class EventsResolver {
   @Mutation(() => Event)
   removeEvent(@Args('id', { type: () => String }) id: string) {
     return this.eventsService.remove(id);
+  }
+
+  @ResolveField(() => User)
+  organizer(@Parent() event: Event): Promise<User> {
+    return this.eventsService.getOrganizer(event.organizerId);
   }
 }
