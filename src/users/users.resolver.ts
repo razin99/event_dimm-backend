@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
@@ -8,28 +8,41 @@ import { UpdateUserInput } from './dto/update-user.input';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @Mutation(() => User)
+  @Mutation(() => User, {
+    description: 'create new user and return it back',
+  })
   createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return this.usersService.create(createUserInput);
   }
 
-  @Query(() => [User], { name: 'users' })
+  @Query(() => [User], {
+    name: 'users',
+    description: 'get all users from database',
+  })
   findAll() {
     return this.usersService.findAll();
   }
 
-  @Query(() => User, { name: 'user' })
+  @Query(() => User, {
+    name: 'user',
+    description: 'get one user with given id',
+  })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.usersService.findOne(id);
   }
 
-  @Mutation(() => User)
+  @Mutation(() => User, {
+    description:
+      'if password or username is left blank, it would not be updated',
+  })
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.usersService.update(updateUserInput);
   }
 
-  @Mutation(() => User)
-  removeUser(@Args('id', { type: () => Int }) id: number) {
+  @Mutation(() => Boolean, {
+    description: 'Return true on success, false on failure',
+  })
+  removeUser(@Args('id', { type: () => String }) id: string) {
     return this.usersService.remove(id);
   }
 }
