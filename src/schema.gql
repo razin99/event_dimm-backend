@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  password: String!
+  username: String!
 }
 
 type Mutation {
@@ -19,9 +19,9 @@ type Query {
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
+  password: String
+  username: String
 }
 
 type User {
