@@ -19,7 +19,7 @@ type Query {
 }
 
 input UpdateUserInput {
-  id: Int!
+  id: String!
   password: String
   username: String
 }
