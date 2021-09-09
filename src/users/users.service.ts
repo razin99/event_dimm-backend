@@ -33,28 +33,15 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<User> {
-    // return this.usersRepository.findOneOrFail(id); // an alternative
     return this.usersRepository.findOne(id);
   }
 
   async update(updateUserInput: UpdateUserInput): Promise<User> {
-    const conn = await getConnection();
-    const { id, username, password } = updateUserInput;
-    let setStmt = {};
-    if (username && password) {
-      setStmt = { username, password };
-    } else if (username) {
-      setStmt = { username };
-    } else if (password) {
-      setStmt = { password };
-    }
-    conn
-      .createQueryBuilder()
-      .update(User)
-      .set(setStmt)
-      .where('id = :id', { id })
-      .execute();
-    return this.findOne(id);
+    const preUpdateUser: User = await this.findOne(updateUserInput.id);
+    return this.usersRepository.save({
+      ...preUpdateUser,
+      ...updateUserInput,
+    });
   }
 
   async remove(id: string): Promise<boolean> {
