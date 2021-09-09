@@ -21,8 +21,9 @@ export class UsersService {
     return this.usersRepository.find(); // SELECT * FROM table
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string) {
+    // return this.usersRepository.findOneOrFail(id); // an alternative
+    return this.usersRepository.findOne(id);
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
