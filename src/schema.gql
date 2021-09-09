@@ -8,13 +8,21 @@ input CreateUserInput {
 }
 
 type Mutation {
+  """create new user and return it back"""
   createUser(createUserInput: CreateUserInput!): User!
-  removeUser(id: Int!): User!
+
+  """Return true on success, false on failure"""
+  removeUser(id: String!): Boolean!
+
+  """if password or username is left blank, it would not be updated"""
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
+  """get one user with given id"""
   user(id: String!): User!
+
+  """get all users from database"""
   users: [User!]!
 }
 
