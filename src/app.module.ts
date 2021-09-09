@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { join } from 'path/posix';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -8,6 +9,7 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     UsersModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -17,8 +19,8 @@ import { UsersModule } from './users/users.module';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'user',
-      password: 'password',
+      username: process.env.POSTGRES_USER || 'user',
+      password: process.env.POSTGRES_PASSWORD || 'password',
       database: 'evdimm',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true, // Only for dev, else use something called migration
