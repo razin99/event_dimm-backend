@@ -13,8 +13,11 @@ input CreateUserInput {
 }
 
 type Event {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  date: Timestamp!
+  id: String!
+  location: String!
+  organizer: User!
+  title: String!
 }
 
 type Mutation {
@@ -43,6 +46,11 @@ type Query {
   users: [User!]!
 }
 
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
 input UpdateEventInput {
   """Example field (placeholder)"""
   exampleField: Int
@@ -56,7 +64,9 @@ input UpdateUserInput {
 }
 
 type User {
+  attending: [Event!]
   id: String!
+  organizing: [Event!]
   password: String!
   username: String!
 }

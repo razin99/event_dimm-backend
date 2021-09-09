@@ -1,5 +1,13 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Event } from 'src/events/entities/event.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -15,4 +23,15 @@ export class User {
   @Column()
   @Field(() => String)
   password: string;
+
+  // One user can organize many event
+  @OneToMany(() => Event, (event) => event.organizer)
+  @Field(() => [Event], { nullable: true })
+  organizing: Event[];
+
+  // Many user can attend many event
+  @ManyToMany(() => Event, { nullable: true })
+  @JoinTable()
+  @Field(() => [Event], { nullable: true })
+  attending: Event[];
 }
