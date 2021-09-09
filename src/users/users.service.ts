@@ -5,6 +5,9 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 
+// TODO handle errors in a more graceful way
+// TODO hash password on create
+
 @Injectable()
 export class UsersService {
   constructor(
