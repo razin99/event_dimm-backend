@@ -4,7 +4,11 @@
 
 input CreateEventInput {
   date: Timestamp!
+  fee: Float!
   location: String!
+
+  """user id of organizer"""
+  organizerId: String!
   title: String!
 }
 
@@ -15,6 +19,7 @@ input CreateUserInput {
 
 type Event {
   date: Timestamp!
+  fee: Float!
   id: String!
   location: String!
   organizer: User!
@@ -26,7 +31,7 @@ type Mutation {
 
   """create new user and return it back"""
   createUser(createUserInput: CreateUserInput!): User!
-  removeEvent(id: Int!): Event!
+  removeEvent(id: String!): Event!
 
   """Return true on success, false on failure"""
   removeUser(id: String!): Boolean!
@@ -37,7 +42,7 @@ type Mutation {
 }
 
 type Query {
-  event(id: Int!): Event!
+  event(id: String!): Event!
   events: [Event!]!
 
   """get one user with given id"""
@@ -53,10 +58,14 @@ type Query {
 scalar Timestamp
 
 input UpdateEventInput {
-  date: Timestamp
-  id: Int!
-  location: String
-  title: String
+  date: Timestamp!
+  fee: Float!
+  id: String!
+  location: String!
+
+  """user id of organizer"""
+  organizerId: String
+  title: String!
 }
 
 input UpdateUserInput {

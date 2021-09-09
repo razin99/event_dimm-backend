@@ -1,4 +1,4 @@
-import { ObjectType, Field, GraphQLTimestamp } from '@nestjs/graphql';
+import { ObjectType, Field, GraphQLTimestamp, Float } from '@nestjs/graphql';
 import { User } from 'src/users/entities/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -21,8 +21,15 @@ export class Event {
   @Field(() => String)
   location: string;
 
+  @Column()
+  @Field(() => Float)
+  fee: number;
+
   // Many event can be organized by 1 user
   @ManyToOne(() => User, (user) => user.organizing)
   @Field(() => User)
   organizer: User;
+
+  @Column()
+  organizerId: string;
 }
