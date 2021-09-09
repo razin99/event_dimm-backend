@@ -6,7 +6,7 @@ import { User } from './entities/user.entity';
 
 @Module({
   providers: [UsersResolver, UsersService],
-
+  exports: [UsersService],
   // Enables us to use @InjectRepository in service
   imports: [TypeOrmModule.forFeature([User])],
 })
