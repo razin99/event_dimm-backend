@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, getConnection, Repository, UpdateResult } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
@@ -21,16 +21,32 @@ export class UsersService {
     return this.usersRepository.find(); // SELECT * FROM table
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<User> {
     // return this.usersRepository.findOneOrFail(id); // an alternative
     return this.usersRepository.findOne(id);
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async update(updateUserInput: UpdateUserInput): Promise<User> {
+    const conn = await getConnection();
+    const { id, username, password } = updateUserInput;
+    let setStmt = {};
+    if (username && password) {
+      setStmt = { username, password };
+    } else if (username) {
+      setStmt = { username };
+    } else if (password) {
+      setStmt = { password };
+    }
+    conn
+      .createQueryBuilder()
+      .update(User)
+      .set(setStmt)
+      .where('id = :id', { id })
+      .execute();
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id: number): Promise<DeleteResult> {
+    return this.usersRepository.delete(id);
   }
 }
