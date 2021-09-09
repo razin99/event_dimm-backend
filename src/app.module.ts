@@ -6,11 +6,13 @@ import { join } from 'path/posix';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     UsersModule,
+    EventsModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,

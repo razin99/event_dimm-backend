@@ -2,28 +2,51 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateEventInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 input CreateUserInput {
   password: String!
   username: String!
 }
 
+type Event {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Mutation {
+  createEvent(createEventInput: CreateEventInput!): Event!
+
   """create new user and return it back"""
   createUser(createUserInput: CreateUserInput!): User!
+  removeEvent(id: Int!): Event!
 
   """Return true on success, false on failure"""
   removeUser(id: String!): Boolean!
+  updateEvent(updateEventInput: UpdateEventInput!): Event!
 
   """if password or username is left blank, it would not be updated"""
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
+  event(id: Int!): Event!
+  events: [Event!]!
+
   """get one user with given id"""
   user(id: String!): User!
 
   """get all users from database"""
   users: [User!]!
+}
+
+input UpdateEventInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 input UpdateUserInput {
