@@ -13,4 +13,7 @@ export class CreateEventInput {
 
   @Field(() => Float)
   fee: number;
+
+  @Field(() => String, { description: 'user id of organizer' })
+  organizerId: string;
 }
