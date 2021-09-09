@@ -3,8 +3,9 @@
 # ------------------------------------------------------
 
 input CreateEventInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  date: Timestamp!
+  location: String!
+  title: String!
 }
 
 input CreateUserInput {
@@ -52,9 +53,10 @@ type Query {
 scalar Timestamp
 
 input UpdateEventInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  date: Timestamp
   id: Int!
+  location: String
+  title: String
 }
 
 input UpdateUserInput {

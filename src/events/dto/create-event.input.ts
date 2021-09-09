@@ -1,7 +1,16 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { Field, Float, GraphQLTimestamp, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateEventInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String)
+  title: string;
+
+  @Field(() => GraphQLTimestamp)
+  date: Date;
+
+  @Field(() => String)
+  location: string;
+
+  @Field(() => Float)
+  fee: number;
 }
