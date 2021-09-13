@@ -42,4 +42,35 @@ export class EventsService {
   async getOrganizer(id: string): Promise<User> {
     return this.usersService.findOne(id);
   }
+
+  async getAttendees(id: string): Promise<User[]> {
+    const users: User[] = await this.usersService.findAll({
+      relations: ['attending'],
+    });
+    return users.filter((user) => {
+      return !!user.attending.find((event) => event.id === id);
+    });
+  }
+
+  async attend(id: string, userId: string) {
+    const user: User = await this.usersService.findOne(userId, {
+      relations: ['attending'],
+    });
+    const event: Event = await this.eventsRepository.findOne(id);
+    if (!user.attending) user.attending = [event];
+    else user.attending.push(event);
+    this.usersService.userSave(user);
+    return this.eventsRepository.save(event);
+  }
+
+  async unattend(id: string, userId: string) {
+    const user: User = await this.usersService.findOne(userId, {
+      relations: ['attending'],
+    });
+    if (user.attending) {
+      user.attending = user.attending.filter((event) => event.id !== id);
+      this.usersService.userSave(user);
+    }
+    return this.eventsRepository.findOne(id);
+  }
 }
