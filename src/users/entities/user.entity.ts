@@ -30,7 +30,7 @@ export class User {
   organizing: Event[];
 
   // Many user can attend many event
-  @ManyToMany(() => Event, { nullable: true })
+  @ManyToMany(() => Event, { nullable: true, cascade: true })
   @JoinTable()
   @Field(() => [Event], { nullable: true })
   attending: Event[];

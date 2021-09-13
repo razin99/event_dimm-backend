@@ -1,6 +1,12 @@
 import { ObjectType, Field, GraphQLTimestamp, Float } from '@nestjs/graphql';
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -32,4 +38,8 @@ export class Event {
 
   @Column()
   organizerId: string;
+
+  @ManyToMany(() => Event, { nullable: true, cascade: true })
+  @Field(() => [User], { nullable: true })
+  attendees: User[];
 }

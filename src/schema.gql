@@ -18,6 +18,7 @@ input CreateUserInput {
 }
 
 type Event {
+  attendees: [User!]
   date: Timestamp!
   fee: Float!
   id: String!
@@ -27,14 +28,16 @@ type Event {
 }
 
 type Mutation {
+  attend(id: String!, userId: String!): Event!
   createEvent(createEventInput: CreateEventInput!): Event!
 
   """create new user and return it back"""
   createUser(createUserInput: CreateUserInput!): User!
-  removeEvent(id: String!): Event!
+  removeEvent(id: String!): Boolean!
 
   """Return true on success, false on failure"""
   removeUser(id: String!): Boolean!
+  unattend(id: String!, userId: String!): Event!
   updateEvent(updateEventInput: UpdateEventInput!): Event!
 
   """if password or username is left blank, it would not be updated"""
