@@ -36,7 +36,7 @@ export class EventsResolver {
     return this.eventsService.update(updateEventInput);
   }
 
-  @Mutation(() => Event)
+  @Mutation(() => Boolean)
   removeEvent(@Args('id', { type: () => String }) id: string) {
     return this.eventsService.remove(id);
   }
@@ -44,5 +44,26 @@ export class EventsResolver {
   @ResolveField(() => User)
   organizer(@Parent() event: Event): Promise<User> {
     return this.eventsService.getOrganizer(event.organizerId);
+  }
+
+  @ResolveField(() => [User])
+  attendees(@Parent() event: Event): Promise<User[]> {
+    return this.eventsService.getAttendees(event.id);
+  }
+
+  @Mutation(() => Event)
+  attend(
+    @Args('id', { type: () => String }) id: string,
+    @Args('userId', { type: () => String }) userId: string,
+  ) {
+    return this.eventsService.attend(id, userId);
+  }
+
+  @Mutation(() => Event)
+  unattend(
+    @Args('id', { type: () => String }) id: string,
+    @Args('userId', { type: () => String }) userId: string,
+  ) {
+    return this.eventsService.unattend(id, userId);
   }
 }
