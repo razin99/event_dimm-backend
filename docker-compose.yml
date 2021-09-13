@@ -7,3 +7,9 @@ services:
     ports:
       - '5432:5432'
     mem_limit: 500M
+    volumes:
+      - postgres-evdimm:/var/lib/postgresql/data
+
+volumes:
+  postgres-evdimm:
+    external: true
