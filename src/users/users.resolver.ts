@@ -31,6 +31,15 @@ export class UsersResolver {
     return this.usersService.findOne(id);
   }
 
+  @Query(() => String)
+  async login(
+    @Args('username', { type: () => String }) username: string,
+    @Args('password', { type: () => String }) password: string,
+  ): Promise<string> {
+    const user: User = await this.usersService.login({ username, password });
+    return user.id || '';
+  }
+
   @Mutation(() => User, {
     description:
       'if password or username is left blank, it would not be updated',

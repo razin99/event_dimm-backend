@@ -51,4 +51,21 @@ export class UsersService {
   async remove(id: string): Promise<boolean> {
     return (await this.usersRepository.delete(id)).affected === 1;
   }
+
+  async login({
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+  }): Promise<User> {
+    const user: User[] = await getConnection()
+      .createQueryBuilder()
+      .select()
+      .from(User, 'user')
+      .where('username = :username', { username })
+      .andWhere('password = :password', { password })
+      .execute();
+    return user.length === 1 ? user[0] : null;
+  }
 }
