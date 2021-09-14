@@ -4,6 +4,7 @@
 
 input CreateEventInput {
   date: Timestamp!
+  description: String!
   fee: Float!
   location: String!
 
@@ -13,6 +14,8 @@ input CreateEventInput {
 }
 
 input CreateUserInput {
+  first_name: String!
+  last_name: String!
   password: String!
   username: String!
 }
@@ -20,6 +23,7 @@ input CreateUserInput {
 type Event {
   attendees: [User!]
   date: Timestamp!
+  description: String!
   fee: Float!
   id: String!
   location: String!
@@ -62,6 +66,7 @@ scalar Timestamp
 
 input UpdateEventInput {
   date: Timestamp!
+  description: String!
   fee: Float!
   id: String!
   location: String!
@@ -72,14 +77,18 @@ input UpdateEventInput {
 }
 
 input UpdateUserInput {
+  first_name: String
   id: String!
+  last_name: String
   password: String
   username: String
 }
 
 type User {
   attending: [Event!]
+  first_name: String!
   id: String!
+  last_name: String!
   organizing: [Event!]
   password: String!
   username: String!

@@ -19,6 +19,10 @@ export class Event {
   @Field(() => String)
   title: string;
 
+  @Column()
+  @Field(() => String)
+  description: string;
+
   @Column({ type: 'timestamp' })
   @Field(() => GraphQLTimestamp)
   date: Date;

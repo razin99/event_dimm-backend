@@ -22,6 +22,14 @@ export class User {
 
   @Column()
   @Field(() => String)
+  first_name: string;
+
+  @Column()
+  @Field(() => String)
+  last_name: string;
+
+  @Column()
+  @Field(() => String)
   password: string;
 
   // One user can organize many event

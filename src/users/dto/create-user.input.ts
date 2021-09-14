@@ -10,4 +10,12 @@ export class CreateUserInput {
   @Length(10, 150)
   @Field(() => String)
   password: string;
+
+  @Length(3, 100)
+  @Field(() => String)
+  first_name: string;
+
+  @Length(3, 100)
+  @Field(() => String)
+  last_name: string;
 }

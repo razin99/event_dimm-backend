@@ -15,6 +15,9 @@ export class UpdateEventInput extends PartialType(CreateEventInput) {
   @Field(() => String)
   title?: string;
 
+  @Field(() => String)
+  description?: string;
+
   @Field(() => GraphQLTimestamp)
   date?: Date;
 
