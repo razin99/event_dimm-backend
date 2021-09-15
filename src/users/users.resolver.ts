@@ -37,7 +37,7 @@ export class UsersResolver {
     @Args('password', { type: () => String }) password: string,
   ): Promise<string> {
     const user: User = await this.usersService.login({ username, password });
-    return user.id || '';
+    return user && !!user.id ? user.id : '';
   }
 
   @Mutation(() => User, {
